@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
@@ -15,12 +16,9 @@ app.use(express.json());
 
 // ✅ CONNECT TO MONGO FIRST
 mongoose
-  .connect(
-    "mongodb+srv://lesamona852_db_user:mynameis1234@cluster0.0roi0e9.mongodb.net/jewelleryDB",
-    {
-      serverSelectionTimeoutMS: 5000,
-    }
-  )
+  .connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+  })
   .then(() => {
     console.log("✅ MongoDB Connected");
 
@@ -35,9 +33,9 @@ mongoose
       res.send("Jewellery API Running");
     });
 
-    const PORT = 5000;
+    const PORT = process.env.PORT || 5000;
     app.listen(PORT, () =>
-      console.log(`🚀 Server running on http://localhost:${PORT}`)
+      console.log(`🚀 Server running on port ${PORT}`)
     );
   })
   .catch((err) => {
