@@ -1,24 +1,24 @@
-# ✨ AUREA Jewelry Store — Full-Stack E-Commerce Website
+#  AUREA Jewelry Store — Full-Stack E-Commerce Website
 
 A full-stack jewelry e-commerce web application built as a course project. 
 Users can browse jewelry products, create an account, add items to their cart, 
 and go through a checkout flow. Built with React on the frontend and 
 Express + MongoDB on the backend.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 **Frontend:** React, React Router, CSS  
 **Backend:** Node.js, Express.js  
 **Database:** MongoDB (Mongoose)
 
-## ✨ Features
-- 🔐 User authentication (signup & login)
-- 💍 Browse jewelry products by category
-- 🛒 Add to cart/bag functionality
-- 🧾 Checkout flow (no real payment processing — course project scope)
-- 📩 Contact form
-- 📱 Responsive design
+##  Features
+-  User authentication (signup & login)
+-  Browse jewelry products by category
+-  Add to cart/bag functionality
+-  Checkout flow (no real payment processing — course project scope)
+-  Contact form
+-  Responsive design
 
-## 📂 Project Structure
+##  Project Structure
 
 web project/
 ├── my_projnodejs/ # React frontend
@@ -32,7 +32,7 @@ web project/
 └── server.js
 
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js installed on your machine
@@ -70,10 +70,10 @@ npm run dev
 
 The app should now be running locally.
 
-## 🎯 What I Learned
+##  What I Learned
 Building this project taught me how to connect a React frontend to an 
 Express/MongoDB backend, manage global cart state using Context API, and 
 implement user authentication in a full-stack application.
 
-## 📬 Contact
+## Contact
 Haleema Bibi — lesamona852@gmail.com
