@@ -30,12 +30,16 @@ export default function Jewellery() {
   useEffect(() => {
     if (location.state?.type) {
       setTypeFilter(location.state.type);
+    } else if (!location.state?.highlight) {
+      // No filter/search was passed in — this is a plain nav click, so reset
+      setTypeFilter("All");
+      setSortFilter("All");
     }
-  }, [location.state]);
+  }, [location.key]);
 
   useEffect(() => {
-fetch(`${import.meta.env.VITE_API_URL}/products`)
-    .then((res) => {
+    fetch(`${import.meta.env.VITE_API_URL}/products`)
+      .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch products");
         return res.json();
       })
