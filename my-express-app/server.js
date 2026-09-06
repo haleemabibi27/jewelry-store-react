@@ -14,19 +14,27 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Cache the connection so we don't reconnect on every single request
-// (important for serverless — each function call would otherwise open a new connection)
-let isConnected = false;
-async function connectDB() {
-  if (isConnected) return;
-  await mongoose.connect(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 5000,
-  });
-  isConnected = true;
-  console.log("✅ MongoDB Connected");
+// Cache the connection across serverless invocations using a global object.
+// This survives "warm" function reuse, avoiding reconnect races.
+let cached = global.mongooseConn;
+if (!cached) {
+  cached = global.mongooseConn = { conn: null, promise: null };
 }
 
-// Make sure every request waits for the DB connection before hitting a route
+async function connectDB() {
+  if (cached.conn) return cached.conn;
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(process.env.MONGO_URI, {
+        serverSelectionTimeoutMS: 10000,
+        bufferCommands: false,
+      })
+      .then((m) => m);
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -37,7 +45,6 @@ app.use(async (req, res, next) => {
   }
 });
 
-// Routes are now registered immediately, not nested inside a .then()
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/contact", contactRoutes);
@@ -48,7 +55,6 @@ app.get("/", (req, res) => {
   res.send("Jewellery API Running");
 });
 
-// Only listen on a port locally — Vercel handles this itself in production
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
