@@ -93,8 +93,8 @@ await new Promise(resolve => setTimeout(resolve, 1500));*/
     };
 
     try {
-      const res = await fetch("http://localhost:5000/orders", {
-        method: "POST",
+const res = await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
+      method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData)
       });

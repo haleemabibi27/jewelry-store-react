@@ -34,8 +34,8 @@ export default function Jewellery() {
   }, [location.state]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/products")
-      .then((res) => {
+fetch(`${import.meta.env.VITE_API_URL}/products`)
+    .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch products");
         return res.json();
       })

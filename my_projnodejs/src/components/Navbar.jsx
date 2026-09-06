@@ -21,7 +21,7 @@ export default function Navbar() {
   const categories = ["ring","bracelet","earring","necklace","casual","party wear","bridal"];
 
   useEffect(() => {
-    fetch("http://localhost:5000/products")
+    fetch(`${import.meta.env.VITE_API_URL}/products`)
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error("Failed to load products for search:", err));
